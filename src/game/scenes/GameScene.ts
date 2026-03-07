@@ -1,6 +1,10 @@
-import { Scene } from "phaser";
+import { SpriteWithDynamicBody } from "../types";
+import { Player } from "../entities/Player";
 
-export class GameScene extends Scene {
+export class GameScene extends Phaser.Scene {
+  player: Player;
+  startTrigger: SpriteWithDynamicBody;
+
   constructor() {
     super("GameScene");
   }
@@ -12,10 +16,19 @@ export class GameScene extends Scene {
   create() {
     this.createEnvironment();
     this.createPlayer();
+
+    this.startTrigger = this.physics.add
+      .sprite(0, 30, "")
+      .setAlpha(0)
+      .setOrigin(0, 1);
+
+    this.physics.add.overlap(this.startTrigger, this.player, () => {
+      console.log("Trigger Collision");
+    });
   }
 
   createPlayer() {
-    this.physics.add.sprite(0, this.gameHeight, "dino-idle").setOrigin(0, 1);
+    this.player = new Player(this, 0, this.gameHeight, "dino-idle");
   }
 
   createEnvironment() {
