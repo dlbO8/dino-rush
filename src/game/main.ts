@@ -1,6 +1,6 @@
 import { AUTO, Game, Types } from "phaser";
 import PreloadScene from "./scenes/PreloadScene";
-import { GameScene } from "./scenes/GameScene";
+import { PlayScene } from "./scenes/PlayScene";
 
 // Find out more information about the Game Config at:
 // https://docs.phaser.io/api-documentation/typedef/types-core#gameconfig
@@ -17,7 +17,7 @@ const config: Types.Core.GameConfig = {
       debug: true,
     },
   },
-  scene: [PreloadScene, GameScene],
+  scene: [PreloadScene, PlayScene],
 };
 
 const StartGame = (parent: string) => {
