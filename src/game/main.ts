@@ -2,11 +2,13 @@ import { AUTO, Game, Types } from "phaser";
 import PreloadScene from "./scenes/PreloadScene";
 import { PlayScene } from "./scenes/PlayScene";
 
-// Find out more information about the Game Config at:
-// https://docs.phaser.io/api-documentation/typedef/types-core#gameconfig
+export const PRELOAD_CONFIG = {
+  cactusesCount: 6,
+};
+
 const config: Types.Core.GameConfig = {
   type: AUTO,
-  width: 800,
+  width: 1000,
   height: 340,
   parent: "game-container",
   pixelArt: true,
