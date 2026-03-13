@@ -4,6 +4,7 @@ import { PlayScene } from "./scenes/PlayScene";
 
 export const PRELOAD_CONFIG = {
   cactusesCount: 6,
+  birdsCount: 2,
 };
 
 const config: Types.Core.GameConfig = {

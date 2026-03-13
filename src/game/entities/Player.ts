@@ -20,18 +20,34 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.setOrigin(0, 1)
       .setGravityY(5000)
       .setCollideWorldBounds(true)
-      .setBodySize(44, 92);
+      .setBodySize(44, 92)
+      .setOffset(20, 0)
+      .setDepth(1);
 
     this.registerAnimations();
   }
 
   update() {
-    const { space } = this.cursors;
+    const { space, down } = this.cursors;
+
     const isSpaceJustDown = Phaser.Input.Keyboard.JustDown(space);
+    const isDownJustDown = Phaser.Input.Keyboard.JustDown(down);
+    const isDownJustUp = Phaser.Input.Keyboard.JustUp(down);
+
     const onFloor = (this.body as Phaser.Physics.Arcade.Body).onFloor();
 
     if (isSpaceJustDown && onFloor) {
       this.setVelocityY(-1600);
+    }
+
+    if (isDownJustDown && onFloor) {
+      this.body?.setSize(this.body.width, 58);
+      this.setOffset(60, 34);
+    }
+
+    if (isDownJustUp && onFloor) {
+      this.body?.setSize(44, 92);
+      this.setOffset(20, 0);
     }
 
     if (!this.scene.isGameRunning) {
@@ -48,7 +64,9 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   playRunAnimation() {
-    this.play("dino-run", true);
+    this.body.height <= 58
+      ? this.play("dino-down", true)
+      : this.play("dino-run", true);
   }
 
   registerAnimations() {
@@ -59,5 +77,17 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       frameRate: 10,
       repeat: -1, // Infinate loop
     });
+
+    this.anims.create({
+      key: "dino-down",
+      frames: this.anims.generateFrameNames("dino-down"),
+      frameRate: 10,
+      repeat: -1, // Infinate loop
+    });
+  }
+
+  die() {
+    this.anims.pause();
+    this.setTexture("dino-hurt");
   }
 }
